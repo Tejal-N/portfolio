@@ -1,64 +1,43 @@
 @import "tailwindcss";
 
 /* ============================================
-   MS PAINT DESIGN SYSTEM — Tailwind v4 CSS-first
-   ============================================ */
-
-@theme inline {
-  --color-paint-gray: #C0C0C0;
-  --color-paint-gray-light: #D4D0C8;
-  --color-paint-gray-dark: #808080;
-  --color-paint-white: #FFFFFF;
-  --color-paint-black: #000000;
-  --color-paint-chrome: #ECE9D8;
-  --color-paint-title: #0A246A;
-  --color-paint-title-gradient-start: #0A246A;
-  --color-paint-title-gradient-end: #A6CAF0;
-  --color-paint-highlight: #316AC5;
-
-  /* Classic Paint palette colors */
-  --color-palette-red: #ED1C24;
-  --color-palette-yellow: #FFF200;
-  --color-palette-green: #22B14C;
-  --color-palette-cyan: #00A2E8;
-  --color-palette-blue: #3F48CC;
-  --color-palette-purple: #A349A4;
-  --color-palette-pink: #FFAEC9;
-  --color-palette-orange: #FF7F27;
-  --color-palette-maroon: #880015;
-  --color-palette-olive: #B5E61D;
-  --color-palette-teal: #00A2A8;
-  --color-palette-navy: #3F48CC;
-  --color-palette-dark-red: #880015;
-  --color-palette-dark-yellow: #EFE4B0;
-  --color-palette-dark-green: #006400;
-  --color-palette-light-gray: #C3C3C3;
-  --color-palette-white: #FFFFFF;
-  --color-palette-black: #000000;
-
-  --font-pixel: "VT323", monospace;
-  --font-sans: "Inter", Arial, Helvetica, sans-serif;
-
-  /* Animations */
-  --animate-marching-ants: marching-ants 0.5s linear infinite;
-  --animate-sketch-in: sketch-in 0.6s ease-out forwards;
-  --animate-fade-up: fade-up 0.5s ease-out forwards;
-  --animate-cursor-blink: cursor-blink 1s step-end infinite;
-  --animate-wiggle: wiggle 0.3s ease-in-out;
-  --animate-draw-line: draw-line 1s ease-out forwards;
-}
-
-/* ============================================
-   CSS Custom Properties
+   MS PAINT DESIGN SYSTEM
    ============================================ */
 
 :root {
-  --accent-color: #00A2A8;
-  --canvas-bg: #FFFFFF;
+  --accent-color: #00a2a8;
+  --canvas-bg: #ffffff;
+
+  /* Paint UI */
+  --paint-gray: #c0c0c0;
+  --paint-gray-light: #d4d0c8;
+  --paint-gray-dark: #808080;
+  --paint-white: #ffffff;
+  --paint-black: #000000;
+  --paint-chrome: #ece9d8;
+
+  /* Classic MS Paint dark blue */
+  --paint-title: #0a246a;
+  --paint-highlight: #0a246a;
+
+  /* Classic Paint palette */
+  --palette-red: #ed1c24;
+  --palette-yellow: #fff200;
+  --palette-green: #22b14c;
+  --palette-cyan: #00a2e8;
+  --palette-blue: #3f48cc;
+  --palette-purple: #a349a4;
+  --palette-pink: #ffaec9;
+  --palette-orange: #ff7f27;
+  --palette-maroon: #880015;
+  --palette-olive: #b5e61d;
+  --palette-teal: #00a2a8;
+  --palette-dark-yellow: #efe4b0;
+  --palette-light-gray: #c3c3c3;
 }
 
 /* ============================================
-   Keyframe Animations
+   KEYFRAME ANIMATIONS
    ============================================ */
 
 @keyframes marching-ants {
@@ -96,6 +75,7 @@
 }
 
 @keyframes cursor-blink {
+
   0%,
   100% {
     opacity: 1;
@@ -106,8 +86,8 @@
   }
 }
 
-/* Hero typing cursor */
 @keyframes hero-cursor-blink {
+
   0%,
   49% {
     opacity: 1;
@@ -120,6 +100,7 @@
 }
 
 @keyframes wiggle {
+
   0%,
   100% {
     transform: rotate(0deg);
@@ -169,7 +150,23 @@
 }
 
 /* ============================================
-   Hero Cursor
+   RETRO MENU ANIMATION
+   ============================================ */
+
+@keyframes retro-menu-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(-3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   HERO CURSOR
    ============================================ */
 
 .hero-text {
@@ -188,188 +185,414 @@
 }
 
 /* ============================================
-   Base Styles
+   BASE
    ============================================ */
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #808080 #C0C0C0;
-}
-
-*::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #C0C0C0;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #808080;
-  border: 2px solid #C0C0C0;
-}
-
-*::-webkit-scrollbar-button {
-  background: #C0C0C0;
-  display: block;
-  height: 16px;
-  width: 16px;
-}
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: #C0C0C0;
+  background: #c0c0c0;
   color: #000000;
-  font-family: var(--font-sans);
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
 /* ============================================
-   Paint UI Utilities
+   RETRO WINDOWS / MS PAINT SCROLLBAR
    ============================================ */
 
-/* Classic beveled button effect */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #808080 #c0c0c0;
+}
+
+/* Chrome / Edge / Safari */
+
+*::-webkit-scrollbar {
+  width: 24px;
+  height: 24px;
+}
+
+/* Scrollbar track */
+
+*::-webkit-scrollbar-track {
+  background: #c0c0c0;
+
+  border-left: 2px solid #ffffff;
+  border-top: 2px solid #ffffff;
+
+  box-shadow:
+    inset 1px 1px 0 #808080,
+    inset -1px -1px 0 #dfdfdf;
+}
+
+/* Scrollbar thumb */
+
+*::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+
+  border: 2px solid;
+
+  border-color:
+    #ffffff #808080 #808080 #ffffff;
+
+  min-height: 45px;
+  min-width: 45px;
+
+  box-shadow:
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #404040;
+}
+
+/* Thumb pressed */
+
+*::-webkit-scrollbar-thumb:active {
+  border-color:
+    #808080 #ffffff #ffffff #808080;
+
+  box-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #dfdfdf;
+}
+
+/* Scrollbar buttons */
+
+*::-webkit-scrollbar-button {
+  display: block;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: #c0c0c0;
+
+  border: 2px solid;
+
+  border-color:
+    #ffffff #808080 #808080 #ffffff;
+
+  box-shadow:
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #404040;
+}
+
+/* Button pressed */
+
+*::-webkit-scrollbar-button:active {
+  border-color:
+    #808080 #ffffff #ffffff #808080;
+
+  box-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #dfdfdf;
+}
+
+/* ============================================
+   RETRO SCROLLBAR ARROWS
+   ============================================ */
+
+/* Up arrow */
+
+*::-webkit-scrollbar-button:vertical:decrement {
+  background:
+    linear-gradient(135deg,
+      transparent 50%,
+      #000000 50%) 8px 10px / 7px 7px no-repeat,
+    linear-gradient(225deg,
+      transparent 50%,
+      #000000 50%) 9px 10px / 7px 7px no-repeat,
+    #c0c0c0;
+}
+
+/* Down arrow */
+
+*::-webkit-scrollbar-button:vertical:increment {
+  background:
+    linear-gradient(45deg,
+      transparent 50%,
+      #000000 50%) 8px 7px / 7px 7px no-repeat,
+    linear-gradient(315deg,
+      transparent 50%,
+      #000000 50%) 9px 7px / 7px 7px no-repeat,
+    #c0c0c0;
+}
+
+/* Left arrow */
+
+*::-webkit-scrollbar-button:horizontal:decrement {
+  background:
+    linear-gradient(135deg,
+      transparent 50%,
+      #000000 50%) 10px 8px / 7px 7px no-repeat,
+    linear-gradient(45deg,
+      transparent 50%,
+      #000000 50%) 10px 9px / 7px 7px no-repeat,
+    #c0c0c0;
+}
+
+/* Right arrow */
+
+*::-webkit-scrollbar-button:horizontal:increment {
+  background:
+    linear-gradient(225deg,
+      transparent 50%,
+      #000000 50%) 7px 8px / 7px 7px no-repeat,
+    linear-gradient(315deg,
+      transparent 50%,
+      #000000 50%) 7px 9px / 7px 7px no-repeat,
+    #c0c0c0;
+}
+
+/* ============================================
+   PAINT UI
+   ============================================ */
+
 .paint-bevel {
   border: 2px solid;
-  border-color: #FFFFFF #808080 #808080 #FFFFFF;
-  background: #C0C0C0;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  background: #c0c0c0;
 }
 
 .paint-bevel:active,
 .paint-bevel-pressed {
-  border-color: #808080 #FFFFFF #FFFFFF #808080;
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
-/* Inset panel (sunken) */
 .paint-inset {
   border: 2px solid;
-  border-color: #808080 #FFFFFF #FFFFFF #808080;
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
-/* Paint window border */
 .paint-window-border {
   border: 3px solid;
-  border-color: #DFDFDF #808080 #808080 #DFDFDF;
+  border-color: #dfdfdf #808080 #808080 #dfdfdf;
+
   box-shadow:
-    inset 1px 1px 0 #FFFFFF,
+    inset 1px 1px 0 #ffffff,
     inset -1px -1px 0 #404040;
 }
 
 /* ============================================
-   Title Bar
+   TITLE BAR
    ============================================ */
 
 .paint-title-bar {
-  background: #0A246A;
-  color: white;
+  background: #0a246a;
+  color: #ffffff;
+
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
+
   padding: 2px 4px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   user-select: none;
 }
 
 /* ============================================
-   Menu Bar
+   MENU BAR — RETRO MS PAINT
    ============================================ */
 
 .paint-menu-bar {
-  background: #ECE9D8;
+  background: #ece9d8;
+
   border-bottom: 1px solid #808080;
+
   display: flex;
   align-items: center;
-  font-size: 13px;
-  padding: 1px 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  padding: 2px 3px;
+
   user-select: none;
 }
 
+/* ============================================
+   MENU ITEMS
+   ============================================ */
+
 .paint-menu-item {
-  padding: 2px 8px;
-  cursor: default;
   position: relative;
+
+  padding: 4px 11px;
+
+  background: transparent;
+
+  border: 1px solid transparent;
+
+  color: #000000;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  cursor: default;
+
+  line-height: 1.2;
+
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
 }
 
+/* Dark blue hover */
+
 .paint-menu-item:hover {
-  background: #316AC5;
-  color: white;
+  background: #0a246a;
+  color: #ffffff;
+}
+
+/* Dark blue active */
+
+.paint-menu-item:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  background: #0a246a;
+  color: #ffffff;
+}
+
+/* React active/open menu state */
+
+.paint-menu-item-active {
+  background: #0a246a !important;
+  color: #ffffff !important;
 }
 
 /* ============================================
-   Dropdown Menu
+   DROPDOWN MENU
    ============================================ */
 
 .paint-dropdown {
   position: absolute;
+
   top: 100%;
   left: 0;
-  background: #FFFFFF;
+
+  background: #ffffff;
+
   border: 1px solid #808080;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  min-width: 180px;
+
+  box-shadow:
+    2px 2px 0 #000000,
+    3px 3px 0 rgba(0, 0, 0, 0.15);
+
+  min-width: 190px;
+
   z-index: 100;
-  padding: 2px 0;
+
+  padding: 2px;
+
+  animation: retro-menu-in 0.16s ease-out;
+
+  transform-origin: top left;
 }
 
+/* ============================================
+   DROPDOWN ITEMS
+   ============================================ */
+
 .paint-dropdown-item {
-  padding: 4px 24px;
+  padding: 6px 10px;
+
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 13px;
+
+  color: #000000;
+
+  background: #ffffff;
+
+  border: 1px solid transparent;
+
   cursor: default;
+
   white-space: nowrap;
+
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    padding-left 0.12s ease;
 }
 
 .paint-dropdown-item:hover {
-  background: #316AC5;
-  color: white;
+  background: #0a246a;
+  color: #ffffff;
+  padding-left: 28px;
+}
+
+.paint-dropdown-item:active {
+  background: #0a246a;
+  color: #ffffff;
 }
 
 .paint-dropdown-separator {
   height: 1px;
-  background: #C0C0C0;
-  margin: 4px 2px;
+
+  background: #c0c0c0;
+
+  margin: 3px 2px;
 }
 
 /* ============================================
-   Toolbar
+   SHORTCUT TEXT
+   ============================================ */
+
+.paint-shortcut {
+  margin-left: 32px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.paint-dropdown-item:hover .paint-shortcut {
+  opacity: 0.9;
+}
+
+/* ============================================
+   TOOLBAR
    ============================================ */
 
 .paint-toolbar {
-  background: #ECE9D8;
+  background: #ece9d8;
   border-right: 1px solid #808080;
 }
 
 .paint-tool-btn {
   width: 28px;
   height: 28px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: 1px solid transparent;
+
   cursor: pointer;
+
   padding: 3px;
+
   color: #000000;
+
+  background: transparent;
 }
 
 .paint-tool-btn:hover {
-  border: 1px solid;
-  border-color: #FFFFFF #808080 #808080 #FFFFFF;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  background: #d6d6d6;
 }
 
 .paint-tool-btn.active {
-  border: 1px solid;
-  border-color: #808080 #FFFFFF #FFFFFF #808080;
-  background: #B0B0B0;
+  border-color: #808080 #ffffff #ffffff #808080;
+  background: #b0b0b0;
 }
 
 /* ============================================
-   Selection Rectangle
+   SELECTION RECTANGLE
    ============================================ */
 
 .selection-rect {
@@ -379,48 +602,60 @@ body {
 
 .selection-rect svg {
   position: absolute;
+
   top: -2px;
   left: -2px;
+
   width: calc(100% + 4px);
   height: calc(100% + 4px);
 }
 
 .selection-rect rect {
   fill: none;
+
   stroke: #000000;
+
   stroke-width: 1;
+
   stroke-dasharray: 4 4;
+
   animation: marching-ants 0.5s linear infinite;
 }
 
 /* ============================================
-   Hand-drawn Border
+   HAND-DRAWN BORDER
    ============================================ */
 
 .hand-drawn-border {
   border: 2px solid #000000;
+
   border-radius: 0;
+
   position: relative;
 }
 
 /* ============================================
-   Paint Canvas Area
+   PAINT CANVAS
    ============================================ */
 
 .paint-canvas-area {
-  background: #FFFFFF;
+  background: #ffffff;
+
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 /* ============================================
-   Doodle Styles
+   DOODLES
    ============================================ */
 
 .doodle {
   position: absolute;
+
   pointer-events: none;
+
   opacity: 0.6;
+
   transition: opacity 0.3s ease;
 }
 
@@ -429,46 +664,7 @@ body {
 }
 
 /* ============================================
-   Responsive Paint Layout
-   ============================================ */
-
-@media (max-width: 768px) {
-  body {
-    overflow: auto;
-  }
-
-  .paint-toolbar {
-    border-right: none;
-    border-bottom: 1px solid #808080;
-  }
-}
-
-/* ============================================
-   Accessibility
-   ============================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Focus ring for keyboard navigation */
-:focus-visible {
-  outline: 2px dashed #000000;
-  outline-offset: 2px;
-}
-
-/* ============================================
-   Accent Color Utility
+   ACCENT COLOR
    ============================================ */
 
 .accent-underline {
@@ -486,4 +682,57 @@ body {
 
 .accent-text {
   color: var(--accent-color);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+
+  .paint-toolbar {
+    border-right: none;
+    border-bottom: 1px solid #808080;
+  }
+
+  .paint-menu-bar {
+    font-size: 13px;
+  }
+
+  .paint-menu-item {
+    padding: 4px 8px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .paint-dropdown {
+    animation: none;
+  }
+
+  .paint-dropdown-item,
+  .paint-menu-item {
+    transition: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px dashed #000000;
+  outline-offset: 2px;
 }
