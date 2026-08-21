@@ -61,15 +61,11 @@ export function MenuBar({
           action: () => onNavigate("about"),
         },
         {
-          label: "Projects",
-          action: () => onNavigate("projects"),
-        },
-        {
           label: "Skills",
           action: () => onNavigate("skills"),
         },
         {
-          label: "Experience",
+          label: "Projects & Experience",
           action: () => onNavigate("experience"),
         },
         {
@@ -83,8 +79,8 @@ export function MenuBar({
       label: "Help",
       items: [
         {
-          label: "About This Portfolio",
-          action: () => onNavigate("about"),
+          label: "I’m Here",
+          action: () => onNavigate("contact"),
         },
       ],
     },

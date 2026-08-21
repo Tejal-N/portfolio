@@ -736,3 +736,9 @@ body {
   outline: 2px dashed #000000;
   outline-offset: 2px;
 }
+
+/* PIXEL CURSOR */
+.experience-window,
+.experience-window * {
+  cursor: url("/cursor.svg") 0 0, default !important;
+}

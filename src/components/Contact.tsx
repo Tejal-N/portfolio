@@ -71,7 +71,7 @@ export function Contact({ accentColor }: ContactProps) {
           {/* Window title bar */}
           <div className="bg-[#0A246A] text-white h-6 px-2 flex items-center justify-between">
             <span className="text-xs font-bold">
-              Contact - Paint
+              Contact
             </span>
 
             <div className="flex items-center gap-1">
