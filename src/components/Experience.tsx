@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { timelineEntries } from "@/data/experience";
 import { Folder, X, Minus, Square } from "lucide-react";
+
+import { timelineEntries } from "@/data/experience";
+import { projects } from "@/data/projects";
+import { ProjectCard } from "@/components/ProjectCard";
 
 interface ExperienceProps {
   accentColor: string;
@@ -14,45 +17,30 @@ type FolderType =
   | "certifications"
   | "designs";
 
-interface FolderConfig {
+const folders: {
   id: FolderType;
   name: string;
-  type: string;
-  color: string;
-}
-
-const folders: FolderConfig[] = [
+}[] = [
   {
     id: "education",
     name: "Education",
-    type: "education",
-    color: "#3F48CC",
   },
   {
     id: "projects",
     name: "Projects",
-    type: "project",
-    color: "#00A2A8",
   },
   {
     id: "certifications",
     name: "Certifications",
-    type: "certification",
-    color: "#A349A4",
   },
   {
     id: "designs",
     name: "Designs",
-    type: "design",
-    color: "#FF7F27",
   },
 ];
 
 export function Experience({ accentColor }: ExperienceProps) {
   const [openFolder, setOpenFolder] =
-    useState<FolderType | null>(null);
-
-  const [selectedFolder, setSelectedFolder] =
     useState<FolderType | null>(null);
 
   const [currentTime, setCurrentTime] = useState("");
@@ -64,10 +52,6 @@ export function Experience({ accentColor }: ExperienceProps) {
 
   const [showCustomCursor, setShowCustomCursor] =
     useState(false);
-
-  /*
-   * Clock
-   */
 
   useEffect(() => {
     const updateTime = () => {
@@ -86,45 +70,29 @@ export function Experience({ accentColor }: ExperienceProps) {
     return () => clearInterval(interval);
   }, []);
 
-  /*
-   * Current folder
-   */
-
   const currentFolder = folders.find(
     (folder) => folder.id === openFolder
   );
 
   const currentEntries = currentFolder
-    ? timelineEntries.filter(
-        (entry) => entry.type === currentFolder.type
-      )
+    ? timelineEntries.filter((entry) => {
+        if (currentFolder.id === "education") {
+          return entry.type === "education";
+        }
+
+        if (currentFolder.id === "certifications") {
+          return entry.type === "certification";
+        }
+
+        if (currentFolder.id === "designs") {
+          return entry.type === "design";
+        }
+
+        return false;
+      })
     : [];
 
-  /*
-   * Open folder
-   */
-
-  const openFolderWindow = (folder: FolderType) => {
-    setSelectedFolder(folder);
-    setOpenFolder(folder);
-  };
-
-  /*
-   * Close folder
-   */
-
-  const closeWindow = () => {
-    setOpenFolder(null);
-  };
-
-  /*
-   * Custom cursor
-   *
-   * The position is calculated relative to the
-   * entire Windows desktop container.
-   */
-
-  const handleDesktopMouseMove = (
+  const handleMouseMove = (
     e: React.MouseEvent<HTMLDivElement>
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -135,12 +103,13 @@ export function Experience({ accentColor }: ExperienceProps) {
     });
   };
 
+  const closeWindow = () => {
+    setOpenFolder(null);
+  };
+
   return (
     <section id="experience" className="py-16 md:py-24">
-      {/* =========================================
-          SECTION TITLE
-      ========================================== */}
-
+      {/* SECTION TITLE */}
       <div className="mb-10">
         <h2 className="text-3xl md:text-4xl font-[family-name:var(--font-pixel)] tracking-wider uppercase">
           Projects &amp; Experience
@@ -174,10 +143,7 @@ export function Experience({ accentColor }: ExperienceProps) {
         </svg>
       </div>
 
-      {/* =========================================
-          WINDOWS DESKTOP
-      ========================================== */}
-
+      {/* WINDOWS DESKTOP */}
       <div
         className="
           relative
@@ -198,12 +164,9 @@ export function Experience({ accentColor }: ExperienceProps) {
         }}
         onMouseEnter={() => setShowCustomCursor(true)}
         onMouseLeave={() => setShowCustomCursor(false)}
-        onMouseMove={handleDesktopMouseMove}
+        onMouseMove={handleMouseMove}
       >
-        {/* =========================================
-            CUSTOM SVG CURSOR
-        ========================================== */}
-
+        {/* CUSTOM CURSOR */}
         {showCustomCursor && (
           <img
             src="/cursor.svg"
@@ -224,10 +187,7 @@ export function Experience({ accentColor }: ExperienceProps) {
           />
         )}
 
-        {/* =========================================
-            DESKTOP OVERLAY
-        ========================================== */}
-
+        {/* DESKTOP OVERLAY */}
         <div
           className="
             absolute
@@ -237,10 +197,7 @@ export function Experience({ accentColor }: ExperienceProps) {
           "
         />
 
-        {/* =========================================
-            DESKTOP ICONS
-        ========================================== */}
-
+        {/* DESKTOP ICONS */}
         <div
           className="
             relative
@@ -258,16 +215,13 @@ export function Experience({ accentColor }: ExperienceProps) {
           "
         >
           {folders.map((folder) => {
-            const isSelected =
-              selectedFolder === folder.id;
+            const isSelected = openFolder === folder.id;
 
             return (
               <button
                 key={folder.id}
                 type="button"
-                onClick={() =>
-                  openFolderWindow(folder.id)
-                }
+                onClick={() => setOpenFolder(folder.id)}
                 className={`
                   group
                   w-24
@@ -287,7 +241,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                 `}
               >
                 {/* Folder Icon */}
-
                 <div className="relative flex items-center justify-center">
                   <Folder
                     size={52}
@@ -303,7 +256,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                 </div>
 
                 {/* Folder Label */}
-
                 <span
                   className="
                     text-sm
@@ -322,10 +274,7 @@ export function Experience({ accentColor }: ExperienceProps) {
           })}
         </div>
 
-        {/* =========================================
-            OPEN FOLDER WINDOW
-        ========================================== */}
-
+        {/* OPEN FOLDER WINDOW */}
         {openFolder && currentFolder && (
           <div
             className="
@@ -351,10 +300,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               cursor-none
             "
           >
-            {/* =====================================
-                TITLE BAR
-            ====================================== */}
-
+            {/* TITLE BAR */}
             <div
               className="
                 flex
@@ -384,7 +330,6 @@ export function Experience({ accentColor }: ExperienceProps) {
 
               <div className="flex gap-1">
                 {/* Minimize */}
-
                 <button
                   type="button"
                   className="
@@ -402,8 +347,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                     justify-center
                     text-[10px]
                     font-bold
-                    active:border-t-[#404040]
-                    active:border-l-[#404040]
                     cursor-none
                   "
                   aria-label="Minimize"
@@ -412,7 +355,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                 </button>
 
                 {/* Maximize */}
-
                 <button
                   type="button"
                   className="
@@ -438,7 +380,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                 </button>
 
                 {/* Close */}
-
                 <button
                   type="button"
                   onClick={closeWindow}
@@ -458,8 +399,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                     text-[10px]
                     font-bold
                     hover:bg-[#D6D6D6]
-                    active:border-t-[#404040]
-                    active:border-l-[#404040]
                     cursor-none
                   "
                   aria-label="Close"
@@ -469,10 +408,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               </div>
             </div>
 
-            {/* =====================================
-                MENU BAR
-            ====================================== */}
-
+            {/* MENU BAR */}
             <div
               className="
                 flex
@@ -494,10 +430,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               <span>Help</span>
             </div>
 
-            {/* =====================================
-                ADDRESS BAR
-            ====================================== */}
-
+            {/* ADDRESS BAR */}
             <div
               className="
                 flex
@@ -556,10 +489,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               </button>
             </div>
 
-            {/* =====================================
-                FOLDER DETAILS
-            ====================================== */}
-
+            {/* CONTENT */}
             <div
               className="
                 flex-1
@@ -575,7 +505,19 @@ export function Experience({ accentColor }: ExperienceProps) {
                 p-4
               "
             >
-              {currentEntries.length > 0 ? (
+              {/* PROJECTS */}
+              {openFolder === "projects" ? (
+                <div className="space-y-4">
+                  {projects.map((project) => (
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      accentColor={accentColor}
+                    />
+                  ))}
+                </div>
+              ) : currentEntries.length > 0 ? (
+                /* EDUCATION / CERTIFICATIONS / DESIGNS */
                 <div className="space-y-3">
                   {currentEntries.map((entry) => (
                     <div
@@ -593,7 +535,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                       "
                     >
                       {/* File Header */}
-
                       <div
                         className="
                           flex
@@ -617,7 +558,6 @@ export function Experience({ accentColor }: ExperienceProps) {
                       </div>
 
                       {/* Details */}
-
                       <div className="text-xs md:text-sm space-y-2">
                         <div className="flex">
                           <span className="w-24 text-[#555]">
@@ -637,20 +577,17 @@ export function Experience({ accentColor }: ExperienceProps) {
                           <span>{entry.date}</span>
                         </div>
 
-                        {/* CGPA */}
+                        {"cgpa" in entry && entry.cgpa && (
+                          <div className="flex">
+                            <span className="w-24 text-[#555]">
+                              CGPA:
+                            </span>
 
-                        {"cgpa" in entry &&
-                          entry.cgpa && (
-                            <div className="flex">
-                              <span className="w-24 text-[#555]">
-                                CGPA:
-                              </span>
-
-                              <span className="font-bold">
-                                {entry.cgpa}
-                              </span>
-                            </div>
-                          )}
+                            <span className="font-bold">
+                              {entry.cgpa}
+                            </span>
+                          </div>
+                        )}
 
                         <div
                           className="
@@ -664,11 +601,39 @@ export function Experience({ accentColor }: ExperienceProps) {
                         >
                           {entry.description}
                         </div>
+
+                        {/* Certificate Link */}
+                        {entry.link && (
+                          <a
+                            href={entry.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="
+                              inline-block
+                              mt-2
+                              px-3
+                              py-1
+                              bg-[#C0C0C0]
+                              border-2
+                              border-t-white
+                              border-l-white
+                              border-r-[#404040]
+                              border-b-[#404040]
+                              text-xs
+                              font-bold
+                              text-black
+                              hover:bg-[#D6D6D6]
+                            "
+                          >
+                            View Certificate
+                          </a>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
+                /* EMPTY DESIGNS FOLDER */
                 <div
                   className="
                     min-h-full
@@ -698,10 +663,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               )}
             </div>
 
-            {/* =====================================
-                STATUS BAR
-            ====================================== */}
-
+            {/* STATUS BAR */}
             <div
               className="
                 h-6
@@ -718,8 +680,15 @@ export function Experience({ accentColor }: ExperienceProps) {
               "
             >
               <span>
-                {currentEntries.length} item
-                {currentEntries.length !== 1 ? "s" : ""}
+                {openFolder === "projects"
+                  ? projects.length
+                  : currentEntries.length}{" "}
+                item
+                {(openFolder === "projects"
+                  ? projects.length
+                  : currentEntries.length) !== 1
+                  ? "s"
+                  : ""}
               </span>
 
               <span>Ready</span>
@@ -727,10 +696,7 @@ export function Experience({ accentColor }: ExperienceProps) {
           </div>
         )}
 
-        {/* =========================================
-            TASKBAR
-        ========================================== */}
-
+        {/* TASKBAR */}
         <div
           className="
             absolute
@@ -749,7 +715,6 @@ export function Experience({ accentColor }: ExperienceProps) {
           "
         >
           {/* Start */}
-
           <button
             type="button"
             className="
@@ -767,8 +732,6 @@ export function Experience({ accentColor }: ExperienceProps) {
               items-center
               gap-1
               text-black
-              active:border-t-[#404040]
-              active:border-l-[#404040]
               cursor-none
             "
           >
@@ -778,7 +741,6 @@ export function Experience({ accentColor }: ExperienceProps) {
           </button>
 
           {/* Active Window */}
-
           {openFolder && currentFolder && (
             <button
               type="button"
@@ -815,11 +777,9 @@ export function Experience({ accentColor }: ExperienceProps) {
           )}
 
           {/* Spacer */}
-
           <div className="flex-1" />
 
           {/* Clock */}
-
           <div
             className="
               h-7
