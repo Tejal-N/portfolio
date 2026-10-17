@@ -12,6 +12,7 @@ export interface TimelineEntry {
   subtitle: string;
   date: string;
   cgpa?: string;
+  percentage?: string;
   description: string;
   link?: string;
 }
@@ -33,18 +34,26 @@ export const timelineEntries: TimelineEntry[] = [
       "Studying Information Science & Engineering with a focus on software development, web technologies, UI/UX design, and practical project development.",
   },
 
-  /* =========================
-     PROJECTS / HACKATHONS
-  ========================= */
+  {
+    id: "12th",
+    type: "education",
+    title: "12th Standard",
+    subtitle: "BOSCOSS Pre-University College, Mangalore",
+    date: "2022 — 2024",
+    percentage: "91.5%",
+    description:
+      "Completed 11th and 12th with a focus on Physics, Chemistry, Mathematics, and Statistics.",
+  },
 
   {
-    id: "sociopsark-2k25",
-    type: "project",
-    title: "SocioSpark 2K25",
-    subtitle: "Hackathon Project",
-    date: "2025",
+    id: "10th",
+    type: "education",
+    title: "10th Standard",
+    subtitle: "St. Theresa's ICSE School, Mangalore",
+    date: "2010 — 2022",
+    percentage: "86.4%",
     description:
-      "Participated in SocioSpark 2K25 and worked with a team to design and develop an innovative software solution.",
+      "Completed 12 years of schooling under the ICSE curriculum with a strong academic foundation and holistic learning experience.",
   },
 
   /* =========================
@@ -59,7 +68,7 @@ export const timelineEntries: TimelineEntry[] = [
     date: "2026",
     description:
       "Completed a course covering Python fundamentals, including control structures, functions, collections, libraries, modules, file handling, and exception handling.",
-    link: "PASTE_PYTHON_CERTIFICATE_LINK_HERE",
+    link: "/certificates/TEJAL_IntroductiontoPython.pdf",
   },
 
   {
@@ -71,7 +80,7 @@ export const timelineEntries: TimelineEntry[] = [
     date: "2026",
     description:
       "Completed a course focused on Linux processes, system resource management, and concepts relevant to DevOps environments.",
-    link: "PASTE_LINUX_CERTIFICATE_LINK_HERE",
+    link: "/certificates/TEJAL_OSLinux.pdf",
   },
 
   {
@@ -82,7 +91,7 @@ export const timelineEntries: TimelineEntry[] = [
     date: "2026",
     description:
       "Completed a certification covering fundamental software engineering concepts, development practices, and the software development lifecycle.",
-    link: "PASTE_SOFTWARE_ENGINEERING_CERTIFICATE_LINK_HERE",
+    link: "/certificates/TEJAL_SoftwareEngineering.pdf",
   },
 
   {
@@ -93,7 +102,7 @@ export const timelineEntries: TimelineEntry[] = [
     date: "2026",
     description:
       "Completed a certification focused on Java programming fundamentals, object-oriented programming, and core programming concepts.",
-    link: "PASTE_JAVA_CERTIFICATE_LINK_HERE",
+    link: "/certificates/TEJAL_ProgrammingUsingJAVA.pdf",
   },
 
   {
@@ -104,11 +113,7 @@ export const timelineEntries: TimelineEntry[] = [
     date: "2026",
     description:
       "Completed a certification covering Arduino-based IoT concepts, hardware components, sensor integration, programming, and building connected IoT applications.",
-    link: "PASTE_IOT_CERTIFICATE_LINK_HERE",
+    link: "/certificates/TEJAL_MasteringIoTwithArduino.pdf",
   },
-
-  /* =========================
-     DESIGNS
-  ========================= */
 
 ];

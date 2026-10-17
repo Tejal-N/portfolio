@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Folder, X, Minus, Square } from "lucide-react";
+import { Folder, X, Minus, Square, ArrowLeft } from "lucide-react";
 
 import { timelineEntries } from "@/data/experience";
 import { projects } from "@/data/projects";
@@ -17,31 +17,42 @@ type FolderType =
   | "certifications"
   | "designs";
 
+type DesignFolderType = "posters" | null;
+
 const folders: {
   id: FolderType;
   name: string;
 }[] = [
+  { id: "education", name: "Education" },
+  { id: "projects", name: "Projects" },
+  { id: "certifications", name: "Certifications" },
+  { id: "designs", name: "Designs" },
+];
+
+const posters = [
   {
-    id: "education",
-    name: "Education",
+    id: "poster-1",
+    name: "Poster 1",
+    image: "/designs/posters/poster-1.png",
   },
   {
-    id: "projects",
-    name: "Projects",
+    id: "poster-2",
+    name: "Poster 2",
+    image: "/designs/posters/poster-2.png",
   },
   {
-    id: "certifications",
-    name: "Certifications",
-  },
-  {
-    id: "designs",
-    name: "Designs",
+    id: "poster-3",
+    name: "Poster 3",
+    image: "/designs/posters/poster-3.png",
   },
 ];
 
 export function Experience({ accentColor }: ExperienceProps) {
   const [openFolder, setOpenFolder] =
     useState<FolderType | null>(null);
+
+  const [openDesignFolder, setOpenDesignFolder] =
+    useState<DesignFolderType>(null);
 
   const [currentTime, setCurrentTime] = useState("");
 
@@ -105,6 +116,12 @@ export function Experience({ accentColor }: ExperienceProps) {
 
   const closeWindow = () => {
     setOpenFolder(null);
+    setOpenDesignFolder(null);
+  };
+
+  const openDesktopFolder = (folder: FolderType) => {
+    setOpenFolder(folder);
+    setOpenDesignFolder(null);
   };
 
   return (
@@ -221,7 +238,7 @@ export function Experience({ accentColor }: ExperienceProps) {
               <button
                 key={folder.id}
                 type="button"
-                onClick={() => setOpenFolder(folder.id)}
+                onClick={() => openDesktopFolder(folder.id)}
                 className={`
                   group
                   w-24
@@ -314,9 +331,7 @@ export function Experience({ accentColor }: ExperienceProps) {
                 font-bold
                 flex-shrink-0
               "
-              style={{
-                background: "#0A246A",
-              }}
+              style={{ background: "#0A246A" }}
             >
               <div className="flex items-center gap-2">
                 <Folder
@@ -325,7 +340,12 @@ export function Experience({ accentColor }: ExperienceProps) {
                   color="#A87500"
                 />
 
-                <span>{currentFolder.name}</span>
+                <span>
+                  {currentFolder.name}
+                  {openDesignFolder === "posters"
+                    ? " - Posters"
+                    : ""}
+                </span>
               </div>
 
               <div className="flex gap-1">
@@ -333,21 +353,11 @@ export function Experience({ accentColor }: ExperienceProps) {
                 <button
                   type="button"
                   className="
-                    w-5
-                    h-4
-                    bg-[#C0C0C0]
-                    text-black
-                    border
-                    border-t-white
-                    border-l-white
-                    border-r-[#404040]
-                    border-b-[#404040]
-                    flex
-                    items-center
-                    justify-center
-                    text-[10px]
-                    font-bold
-                    cursor-none
+                    w-5 h-4 bg-[#C0C0C0] text-black border
+                    border-t-white border-l-white
+                    border-r-[#404040] border-b-[#404040]
+                    flex items-center justify-center
+                    text-[10px] font-bold cursor-none
                   "
                   aria-label="Minimize"
                 >
@@ -358,21 +368,11 @@ export function Experience({ accentColor }: ExperienceProps) {
                 <button
                   type="button"
                   className="
-                    w-5
-                    h-4
-                    bg-[#C0C0C0]
-                    text-black
-                    border
-                    border-t-white
-                    border-l-white
-                    border-r-[#404040]
-                    border-b-[#404040]
-                    flex
-                    items-center
-                    justify-center
-                    text-[9px]
-                    font-bold
-                    cursor-none
+                    w-5 h-4 bg-[#C0C0C0] text-black border
+                    border-t-white border-l-white
+                    border-r-[#404040] border-b-[#404040]
+                    flex items-center justify-center
+                    text-[9px] font-bold cursor-none
                   "
                   aria-label="Maximize"
                 >
@@ -384,21 +384,11 @@ export function Experience({ accentColor }: ExperienceProps) {
                   type="button"
                   onClick={closeWindow}
                   className="
-                    w-5
-                    h-4
-                    bg-[#C0C0C0]
-                    text-black
-                    border
-                    border-t-white
-                    border-l-white
-                    border-r-[#404040]
-                    border-b-[#404040]
-                    flex
-                    items-center
-                    justify-center
-                    text-[10px]
-                    font-bold
-                    hover:bg-[#D6D6D6]
+                    w-5 h-4 bg-[#C0C0C0] text-black border
+                    border-t-white border-l-white
+                    border-r-[#404040] border-b-[#404040]
+                    flex items-center justify-center
+                    text-[10px] font-bold hover:bg-[#D6D6D6]
                     cursor-none
                   "
                   aria-label="Close"
@@ -411,17 +401,9 @@ export function Experience({ accentColor }: ExperienceProps) {
             {/* MENU BAR */}
             <div
               className="
-                flex
-                items-center
-                gap-5
-                px-2
-                py-1
-                bg-[#ECE9D8]
-                border-b
-                border-[#808080]
-                text-xs
-                text-black
-                flex-shrink-0
+                flex items-center gap-5 px-2 py-1
+                bg-[#ECE9D8] border-b border-[#808080]
+                text-xs text-black flex-shrink-0
               "
             >
               <span>File</span>
@@ -433,57 +415,50 @@ export function Experience({ accentColor }: ExperienceProps) {
             {/* ADDRESS BAR */}
             <div
               className="
-                flex
-                items-center
-                gap-2
-                p-1
-                bg-[#ECE9D8]
-                border-b
-                border-[#808080]
+                flex items-center gap-2 p-1
+                bg-[#ECE9D8] border-b border-[#808080]
                 flex-shrink-0
               "
             >
+              {openDesignFolder === "posters" && (
+                <button
+                  type="button"
+                  onClick={() => setOpenDesignFolder(null)}
+                  className="text-[10px] text-black flex items-center gap-1"
+                  aria-label="Back to Designs"
+                >
+                  <ArrowLeft size={12} />
+                </button>
+              )}
+
               <span className="text-[10px] text-[#555]">
                 Address
               </span>
 
               <div
                 className="
-                  flex-1
-                  h-5
-                  bg-white
-                  border
-                  border-[#808080]
-                  px-2
-                  flex
-                  items-center
-                  text-[10px]
-                  text-[#333]
-                  overflow-hidden
-                  whitespace-nowrap
+                  flex-1 h-5 bg-white border border-[#808080]
+                  px-2 flex items-center text-[10px] text-[#333]
+                  overflow-hidden whitespace-nowrap
                 "
               >
                 C:\TEJAL\PORTFOLIO\
                 {currentFolder.name.toUpperCase()}
+                {openDesignFolder === "posters"
+                  ? "\\POSTERS"
+                  : ""}
               </div>
 
               <button
                 type="button"
                 className="
-                  w-6
-                  h-5
-                  bg-[#C0C0C0]
-                  border
-                  border-t-white
-                  border-l-white
-                  border-r-[#404040]
-                  border-b-[#404040]
-                  flex
-                  items-center
-                  justify-center
-                  text-black
-                  cursor-none
+                  w-6 h-5 bg-[#C0C0C0] border
+                  border-t-white border-l-white
+                  border-r-[#404040] border-b-[#404040]
+                  flex items-center justify-center
+                  text-black cursor-none
                 "
+                aria-label="Refresh"
               >
                 ↻
               </button>
@@ -492,58 +467,92 @@ export function Experience({ accentColor }: ExperienceProps) {
             {/* CONTENT */}
             <div
               className="
-                flex-1
-                min-h-0
-                m-1
-                bg-white
-                border-2
-                border-t-[#808080]
-                border-l-[#808080]
-                border-r-white
-                border-b-white
-                overflow-y-auto
-                p-4
+                flex-1 min-h-0 m-1 bg-white border-2
+                border-t-[#808080] border-l-[#808080]
+                border-r-white border-b-white
+                overflow-y-auto p-4
               "
             >
               {/* PROJECTS */}
               {openFolder === "projects" ? (
                 <div className="space-y-4">
-                  {projects.map((project) => (
+                  {projects.map((project, index) => (
                     <ProjectCard
-                      key={project.id}
+                      key={"id" in project ? project.id : index}
                       project={project}
                       accentColor={accentColor}
                     />
                   ))}
                 </div>
+              ) : openFolder === "designs" &&
+                openDesignFolder === null ? (
+                /* DESIGNS SUBFOLDERS */
+                <div className="flex flex-wrap gap-6">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setOpenDesignFolder("posters")
+                    }
+                    className="
+                      flex w-24 flex-col items-center gap-2
+                      p-2 text-black hover:bg-[#DCE8F8]
+                    "
+                  >
+                    <Folder
+                      size={48}
+                      strokeWidth={1.2}
+                      fill="#F7C948"
+                      color="#A87500"
+                    />
+
+                    <span className="text-xs text-center">
+                      Posters
+                    </span>
+                  </button>
+                </div>
+              ) : openFolder === "designs" &&
+                openDesignFolder === "posters" ? (
+                /* POSTERS GALLERY */
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {posters.map((poster) => (
+                    <div
+                      key={poster.id}
+                      className="
+                        flex flex-col items-center gap-2
+                        border border-[#C0C0C0] p-2
+                        bg-[#ECE9D8] text-black
+                      "
+                    >
+                      <img
+                        src={poster.image}
+                        alt={poster.name}
+                        className="w-full h-40 object-contain bg-white"
+                      />
+
+                      <span className="text-xs text-center">
+                        {poster.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               ) : currentEntries.length > 0 ? (
-                /* EDUCATION / CERTIFICATIONS / DESIGNS */
+                /* EDUCATION / CERTIFICATIONS */
                 <div className="space-y-3">
                   {currentEntries.map((entry) => (
                     <div
                       key={entry.id}
                       className="
-                        bg-[#ECE9D8]
-                        border-2
-                        border-t-white
-                        border-l-white
-                        border-r-[#808080]
-                        border-b-[#808080]
-                        p-3
-                        text-black
-                        cursor-none
+                        bg-[#ECE9D8] border-2
+                        border-t-white border-l-white
+                        border-r-[#808080] border-b-[#808080]
+                        p-3 text-black cursor-none
                       "
                     >
                       {/* File Header */}
                       <div
                         className="
-                          flex
-                          items-center
-                          gap-2
-                          mb-3
-                          pb-2
-                          border-b
-                          border-[#808080]
+                          flex items-center gap-2 mb-3 pb-2
+                          border-b border-[#808080]
                         "
                       >
                         <Folder
@@ -591,12 +600,8 @@ export function Experience({ accentColor }: ExperienceProps) {
 
                         <div
                           className="
-                            mt-3
-                            pt-2
-                            border-t
-                            border-[#C0C0C0]
-                            text-[#333]
-                            leading-relaxed
+                            mt-3 pt-2 border-t border-[#C0C0C0]
+                            text-[#333] leading-relaxed
                           "
                         >
                           {entry.description}
@@ -609,19 +614,11 @@ export function Experience({ accentColor }: ExperienceProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="
-                              inline-block
-                              mt-2
-                              px-3
-                              py-1
-                              bg-[#C0C0C0]
-                              border-2
-                              border-t-white
-                              border-l-white
-                              border-r-[#404040]
-                              border-b-[#404040]
-                              text-xs
-                              font-bold
-                              text-black
+                              inline-block mt-2 px-3 py-1
+                              bg-[#C0C0C0] border-2
+                              border-t-white border-l-white
+                              border-r-[#404040] border-b-[#404040]
+                              text-xs font-bold text-black
                               hover:bg-[#D6D6D6]
                             "
                           >
@@ -633,16 +630,11 @@ export function Experience({ accentColor }: ExperienceProps) {
                   ))}
                 </div>
               ) : (
-                /* EMPTY DESIGNS FOLDER */
+                /* EMPTY FOLDER */
                 <div
                   className="
-                    min-h-full
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                    text-center
-                    text-black
+                    min-h-full flex flex-col items-center
+                    justify-center text-center text-black
                   "
                 >
                   <Folder
@@ -666,27 +658,27 @@ export function Experience({ accentColor }: ExperienceProps) {
             {/* STATUS BAR */}
             <div
               className="
-                h-6
-                bg-[#ECE9D8]
-                border-t
-                border-[#808080]
-                flex
-                items-center
-                justify-between
-                px-2
-                text-[10px]
-                text-[#555]
-                flex-shrink-0
+                h-6 bg-[#ECE9D8] border-t border-[#808080]
+                flex items-center justify-between px-2
+                text-[10px] text-[#555] flex-shrink-0
               "
             >
               <span>
                 {openFolder === "projects"
                   ? projects.length
-                  : currentEntries.length}{" "}
+                  : openFolder === "designs"
+                    ? openDesignFolder === "posters"
+                      ? posters.length
+                      : 1
+                    : currentEntries.length}{" "}
                 item
                 {(openFolder === "projects"
                   ? projects.length
-                  : currentEntries.length) !== 1
+                  : openFolder === "designs"
+                    ? openDesignFolder === "posters"
+                      ? posters.length
+                      : 1
+                    : currentEntries.length) !== 1
                   ? "s"
                   : ""}
               </span>
@@ -699,45 +691,23 @@ export function Experience({ accentColor }: ExperienceProps) {
         {/* TASKBAR */}
         <div
           className="
-            absolute
-            bottom-0
-            left-0
-            right-0
-            z-40
-            h-10
-            bg-[#C0C0C0]
-            border-t-2
-            border-t-white
-            flex
-            items-center
-            gap-1
-            px-1
+            absolute bottom-0 left-0 right-0 z-40 h-10
+            bg-[#C0C0C0] border-t-2 border-t-white
+            flex items-center gap-1 px-1
           "
         >
           {/* Start */}
           <button
             type="button"
             className="
-              h-7
-              px-3
-              bg-[#C0C0C0]
-              border-2
-              border-t-white
-              border-l-white
-              border-r-[#404040]
-              border-b-[#404040]
-              text-xs
-              font-bold
-              flex
-              items-center
-              gap-1
-              text-black
-              cursor-none
+              h-7 px-3 bg-[#C0C0C0] border-2
+              border-t-white border-l-white
+              border-r-[#404040] border-b-[#404040]
+              text-xs font-bold flex items-center gap-1
+              text-black cursor-none
             "
           >
-            <span className="font-bold italic">
-              Start
-            </span>
+            <span className="font-bold italic">Start</span>
           </button>
 
           {/* Active Window */}
@@ -746,22 +716,11 @@ export function Experience({ accentColor }: ExperienceProps) {
               type="button"
               onClick={closeWindow}
               className="
-                h-7
-                max-w-[180px]
-                px-3
-                bg-[#B0B0B0]
-                border-2
-                border-t-[#404040]
-                border-l-[#404040]
-                border-r-white
-                border-b-white
-                text-[10px]
-                md:text-xs
-                text-black
-                flex
-                items-center
-                gap-2
-                cursor-none
+                h-7 max-w-[180px] px-3 bg-[#B0B0B0]
+                border-2 border-t-[#404040] border-l-[#404040]
+                border-r-white border-b-white
+                text-[10px] md:text-xs text-black
+                flex items-center gap-2 cursor-none
               "
             >
               <Folder
@@ -772,6 +731,9 @@ export function Experience({ accentColor }: ExperienceProps) {
 
               <span className="truncate">
                 {currentFolder.name}
+                {openDesignFolder === "posters"
+                  ? " - Posters"
+                  : ""}
               </span>
             </button>
           )}
@@ -782,19 +744,10 @@ export function Experience({ accentColor }: ExperienceProps) {
           {/* Clock */}
           <div
             className="
-              h-7
-              px-3
-              flex
-              items-center
-              border-2
-              border-t-[#808080]
-              border-l-[#808080]
-              border-r-white
-              border-b-white
-              text-[10px]
-              md:text-xs
-              text-black
-              cursor-none
+              h-7 px-3 flex items-center
+              border-2 border-t-[#808080] border-l-[#808080]
+              border-r-white border-b-white
+              text-[10px] md:text-xs text-black cursor-none
             "
           >
             {currentTime}
